@@ -1,0 +1,16 @@
+PODS:
+  - DeviceHelper (0.1.0)
+
+DEPENDENCIES:
+  - DeviceHelper (from `../`)
+
+EXTERNAL SOURCES:
+  DeviceHelper:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  DeviceHelper: 1561100ac0dd5db63d31afea428250aaf288f45e
+
+PODFILE CHECKSUM: f7491e52d88df5eecb3d773f88266a040dc655f4
+
+COCOAPODS: 1.10.0

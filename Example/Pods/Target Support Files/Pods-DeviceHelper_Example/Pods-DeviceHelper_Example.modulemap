@@ -1,0 +1,6 @@
+framework module Pods_DeviceHelper_Example {
+  umbrella header "Pods-DeviceHelper_Example-umbrella.h"
+
+  export *
+  module * { export * }
+}

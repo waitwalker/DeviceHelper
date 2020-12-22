@@ -1,0 +1,22 @@
+{
+  "name": "DeviceHelper",
+  "version": "0.1.0",
+  "summary": "A short description of DeviceHelper.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/waitwalker/DeviceHelper",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "waitwalker": "waitwalker@163.com"
+  },
+  "source": {
+    "git": "https://github.com/waitwalker/DeviceHelper.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "9.0"
+  },
+  "source_files": "DeviceHelper/Classes/**/*"
+}

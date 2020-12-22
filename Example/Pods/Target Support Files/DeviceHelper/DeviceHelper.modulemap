@@ -1,0 +1,6 @@
+framework module DeviceHelper {
+  umbrella header "DeviceHelper-umbrella.h"
+
+  export *
+  module * { export * }
+}
