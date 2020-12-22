@@ -7,6 +7,7 @@
 #
 
 Pod::Spec.new do |s|
+  s.metadata['allowed_push_host'] = 'https://github.com'
   s.name             = 'DeviceHelper'
   s.version          = '0.1.0'
   s.summary          = 'Devicehelper is used to get the device type.'
