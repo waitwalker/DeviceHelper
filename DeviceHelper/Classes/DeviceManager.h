@@ -33,8 +33,8 @@ typedef enum : NSInteger {
 /// 设备种类 iPhone/iPad... 只读
 @property(nonatomic, assign, readonly) DeviceType deviceType;
 
-/// 设备类型 iPhone 7/ iPhone xr...
-@property(nonatomic, assign, readonly) NSString *deviceMode;
+/// 设备型号 iPhone 7/ iPhone xr...
+@property(nonatomic, assign, readonly) NSString *deviceModelType;
 
 @end
 
