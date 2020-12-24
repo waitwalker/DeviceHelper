@@ -96,9 +96,6 @@ typedef enum : NSInteger {
 /// 设备当前音量
 @property(nonatomic, assign, readonly) CGFloat deviceVolume;
 
-/// 设备WiFi名称
-@property(nonatomic, copy, readonly) NSString *WiFiName;
-
 /// 设备内网ip地址
 @property(nonatomic, copy, readonly) NSString *intranetIPAddress;
 

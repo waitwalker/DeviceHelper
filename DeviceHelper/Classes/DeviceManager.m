@@ -87,9 +87,6 @@
 /// 设备当前音量
 @property(nonatomic, assign, readwrite) CGFloat deviceVolume;
 
-/// 设备WiFi名称
-@property(nonatomic, copy, readwrite) NSString *WiFiName;
-
 /// 设备内网ip地址
 @property(nonatomic, copy, readwrite) NSString *intranetIPAddress;
 
@@ -452,21 +449,6 @@
 
 - (CGFloat)deviceVolume {
     return [[AVAudioSession sharedInstance] outputVolume];
-}
-
-- (NSString *)WiFiName {
-    NSArray *ifs = (__bridge id)CNCopySupportedInterfaces();
-    
-    id info = nil;
-    for (NSString *ifnam in ifs) {
-        info = (__bridge id)CNCopyCurrentNetworkInfo((__bridge CFStringRef)ifnam);
-        if (info && [info count]) {
-            break;
-        }
-    }
-    NSDictionary *dctySSID = (NSDictionary *)info;
-    
-    return [dctySSID objectForKey:@"SSID"];
 }
 
 - (NSString *)intranetIPAddress {
