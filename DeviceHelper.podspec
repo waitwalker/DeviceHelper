@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
   end
   
   s.name             = 'DeviceHelper'
-  s.version          = '0.3.0'
+  s.version          = '1.0'
   s.summary          = 'Devicehelper is used to get the device type.'
 
 # This description is used to generate tags and improve search results.

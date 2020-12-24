@@ -7,6 +7,8 @@
 
 #import "DeviceManager.h"
 #import <sys/utsname.h>
+#import <CoreTelephony/CTCarrier.h>
+#import <CoreTelephony/CTTelephonyNetworkInfo.h>
 
 @interface DeviceManager()
 
@@ -14,7 +16,34 @@
 @property(nonatomic, assign, readwrite) DeviceType deviceType;
 
 /// 设备类型 iPhone 7/ iPhone xr...
-@property(nonatomic, assign, readwrite) NSString *deviceModelType;
+@property(nonatomic, copy, readwrite) NSString *deviceModelType;
+
+/// 设备唯一标识符
+@property(nonatomic, copy, readwrite) NSString *deviceIdentifier;
+
+/// 设备名称
+@property(nonatomic, copy, readwrite) NSString *deviceName;
+
+/// 设备系统版本
+@property(nonatomic, copy, readwrite) NSString *deviceSystemVersion;
+
+/// 设备国际化区域
+@property(nonatomic, copy, readwrite) NSString *deviceLocal;
+
+/// 屏幕分辨率宽
+@property(nonatomic, assign, readwrite) CGFloat screenResolutionWidth;
+
+/// 屏幕分辨率高
+@property(nonatomic, assign, readwrite) CGFloat screenResolutionHeight;
+
+/// 屏幕物理宽
+@property(nonatomic, assign, readwrite) CGFloat screenPhysicalWidth;
+
+/// 屏幕物理高
+@property(nonatomic, assign, readwrite) CGFloat screenPhysicalHeight;
+
+/// 设备运营商
+@property(nonatomic, copy, readwrite) NSString *carrierName;
 
 @end
 
@@ -241,6 +270,44 @@
 
 - (NSString *)deviceModelType {
     return [self getDeviceModelType];
+}
+
+- (NSString *)deviceIdentifier {
+    return [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+}
+
+- (NSString *)deviceName {
+    return [[UIDevice currentDevice] name];
+}
+
+- (NSString *)deviceSystemVersion {
+    return [[UIDevice currentDevice] systemVersion];
+}
+
+- (NSString *)deviceLocal {
+    return [[UIDevice currentDevice] localizedModel];
+}
+
+- (CGFloat)screenPhysicalWidth {
+    return [[UIScreen mainScreen] bounds].size.width;
+}
+
+- (CGFloat)screenPhysicalHeight {
+    return [[UIScreen mainScreen] bounds].size.height;
+}
+
+- (CGFloat)screenResolutionWidth {
+    return [[UIScreen mainScreen] bounds].size.width * [UIScreen mainScreen].scale;
+}
+
+- (CGFloat)screenResolutionHeight {
+    return [[UIScreen mainScreen] bounds].size.height * [UIScreen mainScreen].scale;
+}
+
+- (NSString *)carrierName {
+    CTTelephonyNetworkInfo *info = [[CTTelephonyNetworkInfo alloc] init];
+    CTCarrier *carrier = info.subscriberCellularProvider;
+    return carrier.carrierName;
 }
 
 @end

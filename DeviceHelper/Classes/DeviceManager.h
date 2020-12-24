@@ -34,7 +34,35 @@ typedef enum : NSInteger {
 @property(nonatomic, assign, readonly) DeviceType deviceType;
 
 /// 设备型号 iPhone 7/ iPhone xr...
-@property(nonatomic, assign, readonly) NSString *deviceModelType;
+@property(nonatomic, copy, readonly) NSString *deviceModelType;
+
+/// 设备唯一标识符
+@property(nonatomic, copy, readonly) NSString *deviceIdentifier;
+
+/// 设备名称
+@property(nonatomic, copy, readonly) NSString *deviceName;
+
+/// 设备系统版本
+@property(nonatomic, copy, readonly) NSString *deviceSystemVersion;
+
+/// 设备国际化区域
+@property(nonatomic, copy, readonly) NSString *deviceLocal;
+
+/// 屏幕分辨率宽
+@property(nonatomic, assign, readonly) CGFloat screenResolutionWidth;
+
+/// 屏幕分辨率高
+@property(nonatomic, assign, readonly) CGFloat screenResolutionHeight;
+
+/// 屏幕物理宽
+@property(nonatomic, assign, readonly) CGFloat screenPhysicalWidth;
+
+/// 屏幕物理高
+@property(nonatomic, assign, readonly) CGFloat screenPhysicalHeight;
+
+/// 设备运营商
+@property(nonatomic, copy, readonly) NSString *carrierName;
+
 
 @end
 
