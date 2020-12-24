@@ -247,6 +247,9 @@
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = waitwalker;
 				TargetAttributes = {
+					6003F589195388D20070C39A = {
+						DevelopmentTeam = 4XP6U9X87N;
+					};
 					6003F5AD195388D20070C39A = {
 						TestTargetID = 6003F589195388D20070C39A;
 					};
@@ -494,6 +497,7 @@
 			baseConfigurationReference = AC038248572B9FA7B9255AB3 /* Pods-DeviceHelper_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 4XP6U9X87N;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DeviceHelper/DeviceHelper-Prefix.pch";
 				INFOPLIST_FILE = "DeviceHelper/DeviceHelper-Info.plist";
@@ -510,6 +514,7 @@
 			baseConfigurationReference = C34D7070571417E283CD12CA /* Pods-DeviceHelper_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 4XP6U9X87N;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DeviceHelper/DeviceHelper-Prefix.pch";
 				INFOPLIST_FILE = "DeviceHelper/DeviceHelper-Info.plist";

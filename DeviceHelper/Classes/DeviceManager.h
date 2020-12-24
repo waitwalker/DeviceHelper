@@ -30,8 +30,11 @@ typedef enum : NSInteger {
 
 + (instancetype)sharedManager;
 
-/// 设备类型 只读
+/// 设备种类 iPhone/iPad... 只读
 @property(nonatomic, assign, readonly) DeviceType deviceType;
+
+/// 设备类型 iPhone 7/ iPhone xr...
+@property(nonatomic, assign, readonly) NSString *deviceMode;
 
 @end
 
