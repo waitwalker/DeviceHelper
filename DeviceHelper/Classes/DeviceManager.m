@@ -36,8 +36,6 @@
 
 - (DeviceType)getDeviceType {
     
-    NSString *deviceM = [self deviceModelType];
-    
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
         return iPhone;
     } else if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
@@ -56,7 +54,7 @@
     return unkonwn;
 }
 
-- (NSString* )deviceModelType {
+- (NSString* )getDeviceModelType {
     /// https://www.theiphonewiki.com/wiki/Models
     struct utsname systemInfo;
     uname(&systemInfo);
@@ -230,6 +228,8 @@
     if ([deviceString isEqualToString:@"iPod7,1"])    return @"iPod touch (6th generation)";
     if ([deviceString isEqualToString:@"iPod9,1"])    return @"iPod touch (7th generation)";
     
+    // Simulator
+    if ([deviceString isEqualToString:@"x86_64"])    return @"Simulator";
     
     return deviceString;
 }
@@ -237,6 +237,10 @@
 
 - (DeviceType)deviceType {
     return [self getDeviceType];
+}
+
+- (NSString *)deviceModelType {
+    return [self getDeviceModelType];
 }
 
 @end

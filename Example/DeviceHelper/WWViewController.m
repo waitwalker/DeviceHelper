@@ -23,6 +23,9 @@
     DeviceType deviceType = [DeviceManager sharedManager].deviceType;
     NSLog(@"设备类型:%ld", deviceType);
     
+    NSString *deviceModelType = [DeviceManager sharedManager].deviceModelType;
+    NSLog(@"设备型号:%@",deviceModelType);
+    
 }
 
 - (void)didReceiveMemoryWarning
