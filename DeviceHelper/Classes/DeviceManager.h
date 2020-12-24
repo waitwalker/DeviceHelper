@@ -60,8 +60,47 @@ typedef enum : NSInteger {
 /// 屏幕物理高
 @property(nonatomic, assign, readonly) CGFloat screenPhysicalHeight;
 
+/// 屏幕亮度
+@property(nonatomic, assign, readonly) CGFloat screenBrightness;
+
 /// 设备运营商
 @property(nonatomic, copy, readonly) NSString *carrierName;
+
+/// 设备是否插入sim卡
+@property(nonatomic, assign, readonly) BOOL isSimInserted;
+
+/// 设备是否越狱
+@property(nonatomic, assign, readonly) BOOL isJailBreak;
+
+/// 设备是否允许消息推送
+@property(nonatomic, assign, readonly) BOOL isPushEnabled;
+
+/// 设备是否连接代理
+@property(nonatomic, assign, readonly) BOOL isProxy;
+
+/// 设备磁盘大小
+@property(nonatomic, assign, readonly) long diskTotalSize;
+
+/// 设备磁盘剩余空间大小
+@property(nonatomic, assign, readonly) long diskFreeSize;
+
+/// 设备当前电量
+@property(nonatomic, assign, readonly) CGFloat batteryLevel;
+
+/// 设备电池状态
+@property(nonatomic, copy, readonly) NSString *batteryState;
+
+/// 设备当前音量
+@property(nonatomic, assign, readonly) CGFloat deviceVolume;
+
+/// 设备WiFi名称
+@property(nonatomic, copy, readonly) NSString *WiFiName;
+
+/// 设备内网ip地址
+@property(nonatomic, copy, readonly) NSString *intranetIPAddress;
+
+/// 设备外网ip地址
+@property(nonatomic, copy, readonly) NSString *externalIPAddress;
 
 
 @end

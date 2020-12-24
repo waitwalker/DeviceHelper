@@ -9,13 +9,20 @@
 #import <sys/utsname.h>
 #import <CoreTelephony/CTCarrier.h>
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
+#import <AVFoundation/AVFoundation.h>
+#import <SystemConfiguration/CaptiveNetwork.h>
+#import <sys/ioctl.h>
+#import <net/if.h>
+#import <arpa/inet.h>
+#include <sys/stat.h>
+#include <dlfcn.h>
 
 @interface DeviceManager()
 
-/// 设备类型
+/// 设备种类 iPhone/iPad... 只读
 @property(nonatomic, assign, readwrite) DeviceType deviceType;
 
-/// 设备类型 iPhone 7/ iPhone xr...
+/// 设备型号 iPhone 7/ iPhone xr...
 @property(nonatomic, copy, readwrite) NSString *deviceModelType;
 
 /// 设备唯一标识符
@@ -42,15 +49,51 @@
 /// 屏幕物理高
 @property(nonatomic, assign, readwrite) CGFloat screenPhysicalHeight;
 
+/// 屏幕亮度
+@property(nonatomic, assign, readwrite) CGFloat screenBrightness;
+
 /// 设备运营商
 @property(nonatomic, copy, readwrite) NSString *carrierName;
+
+/// 设备是否插入sim卡
+@property(nonatomic, assign, readwrite) BOOL isSimInserted;
+
+/// 设备是否越狱
+@property(nonatomic, assign, readwrite) BOOL isJailBreak;
+
+/// 设备是否允许消息推送
+@property(nonatomic, assign, readwrite) BOOL isPushEnabled;
+
+/// 设备是否连接代理
+@property(nonatomic, assign, readwrite) BOOL isProxy;
+
+/// 设备磁盘大小
+@property(nonatomic, assign, readwrite) long diskTotalSize;
+
+/// 设备磁盘剩余空间大小
+@property(nonatomic, assign, readwrite) long diskFreeSize;
+
+/// 设备当前电量
+@property(nonatomic, assign, readwrite) CGFloat batteryLevel;
+
+/// 设备电池状态
+@property(nonatomic, copy, readwrite) NSString *batteryState;
+
+/// 设备当前音量
+@property(nonatomic, assign, readwrite) CGFloat deviceVolume;
+
+/// 设备WiFi名称
+@property(nonatomic, copy, readwrite) NSString *WiFiName;
+
+/// 设备内网ip地址
+@property(nonatomic, copy, readwrite) NSString *intranetIPAddress;
+
+/// 设备外网ip地址
+@property(nonatomic, copy, readwrite) NSString *externalIPAddress;
 
 @end
 
 @implementation DeviceManager
-
-@synthesize deviceType = _deviceType;
-@synthesize deviceModelType = _deviceModelType;
 
 + (instancetype)sharedManager {
     static DeviceManager *_manager;
@@ -304,10 +347,71 @@
     return [[UIScreen mainScreen] bounds].size.height * [UIScreen mainScreen].scale;
 }
 
+- (CGFloat)screenBrightness {
+    return [UIScreen mainScreen].brightness;
+}
+
 - (NSString *)carrierName {
     CTTelephonyNetworkInfo *info = [[CTTelephonyNetworkInfo alloc] init];
     CTCarrier *carrier = info.subscriberCellularProvider;
     return carrier.carrierName;
+}
+
+- (BOOL)isSimInserted {
+    CTTelephonyNetworkInfo *networkInfo = [[CTTelephonyNetworkInfo alloc] init];
+    CTCarrier *carrier = [networkInfo subscriberCellularProvider];
+    if (!carrier.isoCountryCode) {
+        return NO;
+    }
+    return YES;
+}
+
+- (BOOL)isJailBreak {
+    //以下检测的过程是越往下，越狱越高级
+    //获取越狱文件路径
+    NSString *cydiaPath = @"/Applications/Cydia.app";
+    NSString *aptPath = @"/private/var/lib/apt/";
+    if ([[NSFileManager defaultManager] fileExistsAtPath:cydiaPath]) {
+        return YES;
+    }
+    if ([[NSFileManager defaultManager] fileExistsAtPath:aptPath]) {
+        return YES;
+    }
+    
+    //可能存在hook了NSFileManager方法，此处用底层C stat去检测
+    struct stat stat_info;
+    if (0 == stat("/Library/MobileSubstrate/MobileSubstrate.dylib", &stat_info)) {
+        return YES;
+    }
+    if (0 == stat("/Applications/Cydia.app", &stat_info)) {
+        return YES;
+    }
+    if (0 == stat("/var/lib/cydia/", &stat_info)) {
+        return YES;
+    }
+    if (0 == stat("/var/cache/apt", &stat_info)) {
+        return YES;
+    }
+    
+    //可能存在stat也被hook了，可以看stat是不是出自系统库，有没有被攻击者换掉。这种情况出现的可能性很小
+    int ret;
+    Dl_info dylib_info;
+    int (*func_stat)(const char *,struct stat *) = stat;
+    if ((ret = dladdr(func_stat, &dylib_info))) {
+        //相等为0，不相等，肯定被攻击
+        if (strcmp(dylib_info.dli_fname, "/usr/lib/system/libsystem_kernel.dylib")) {
+            return YES;
+        }
+    }
+    
+    //通常，越狱机的输出结果会包含字符串：Library/MobileSubstrate/MobileSubstrate.dylib。
+    //攻击者给MobileSubstrate改名，原理都是通过DYLD_INSERT_LIBRARIES注入动态库。那么可以检测当前程序运行的环境变量
+    char *env = getenv("DYLD_INSERT_LIBRARIES");
+    if (env != NULL) {
+        return YES;
+    }
+        
+    return NO;
 }
 
 @end
