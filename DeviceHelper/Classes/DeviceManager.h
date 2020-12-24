@@ -72,9 +72,6 @@ typedef enum : NSInteger {
 /// 设备是否越狱
 @property(nonatomic, assign, readonly) BOOL isJailBreak;
 
-/// 设备是否允许消息推送
-@property(nonatomic, assign, readonly) BOOL isPushEnabled;
-
 /// 设备是否连接代理
 @property(nonatomic, assign, readonly) BOOL isProxy;
 

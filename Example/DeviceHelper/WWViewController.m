@@ -36,6 +36,15 @@
     NSLog(@"设备分辨率尺寸宽:%.f 高:%.f",[DeviceManager sharedManager].screenResolutionWidth, [DeviceManager sharedManager].screenResolutionHeight);
     
     
+    NSLog(@"设备内网ip:%@", [DeviceManager sharedManager].intranetIPAddress);
+    NSLog(@"设备外网ip:%@", [DeviceManager sharedManager].externalIPAddress);
+    NSLog(@"设备WiFi名称:%@", [DeviceManager sharedManager].WiFiName);
+    
+    NSLog(@"设备总存储空间:%ld", [DeviceManager sharedManager].diskTotalSize);
+    NSLog(@"设备可用存储空间:%ld", [DeviceManager sharedManager].diskFreeSize);
+    
+    NSLog(@"设备是否代理:%d", [DeviceManager sharedManager].isProxy);
+    
 }
 
 - (void)didReceiveMemoryWarning

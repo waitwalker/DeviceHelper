@@ -16,6 +16,7 @@
 #import <arpa/inet.h>
 #include <sys/stat.h>
 #include <dlfcn.h>
+#import <UserNotifications/UserNotifications.h>
 
 @interface DeviceManager()
 
@@ -60,9 +61,6 @@
 
 /// 设备是否越狱
 @property(nonatomic, assign, readwrite) BOOL isJailBreak;
-
-/// 设备是否允许消息推送
-@property(nonatomic, assign, readwrite) BOOL isPushEnabled;
 
 /// 设备是否连接代理
 @property(nonatomic, assign, readwrite) BOOL isProxy;
@@ -413,5 +411,122 @@
         
     return NO;
 }
+
+- (BOOL)isProxy {
+    NSDictionary *proxySettings = (__bridge NSDictionary *)(CFNetworkCopySystemProxySettings());
+    NSArray *proxies = (__bridge NSArray *)(CFNetworkCopyProxiesForURL((__bridge CFURLRef _Nonnull)([NSURL URLWithString:@"https://www.baidu.com/"]), (__bridge CFDictionaryRef _Nonnull)(proxySettings)));
+    NSDictionary *settings = proxies[0];
+    if (![[settings objectForKey:(NSString *)kCFProxyTypeKey] isEqualToString:@"kCFProxyTypeNone"]){
+        return YES;
+    }
+    return NO;
+}
+
+- (CGFloat)batteryLevel {
+    [UIDevice currentDevice].batteryMonitoringEnabled = YES;
+    return [[UIDevice currentDevice] batteryLevel];
+}
+
+- (NSString *)batteryState {
+    [UIDevice currentDevice].batteryMonitoringEnabled = YES;
+    UIDeviceBatteryState batteryState = [UIDevice currentDevice].batteryState;
+    switch (batteryState) {
+        case UIDeviceBatteryStateUnplugged:
+            return @"未充电";
+        case UIDeviceBatteryStateCharging:
+            return @"充电中";
+        case UIDeviceBatteryStateFull:
+            return @"已充满";
+        default:
+            return @"未知";
+    }
+}
+
+
+- (CGFloat)deviceVolume {
+    return [[AVAudioSession sharedInstance] outputVolume];
+}
+
+- (NSString *)WiFiName {
+    NSArray *ifs = (__bridge id)CNCopySupportedInterfaces();
+    
+    id info = nil;
+    for (NSString *ifnam in ifs) {
+        info = (__bridge id)CNCopyCurrentNetworkInfo((__bridge CFStringRef)ifnam);
+        if (info && [info count]) {
+            break;
+        }
+    }
+    NSDictionary *dctySSID = (NSDictionary *)info;
+    
+    return [dctySSID objectForKey:@"SSID"];
+}
+
+- (NSString *)intranetIPAddress {
+    int sockfd = socket(AF_INET, SOCK_DGRAM, 0);
+    if (sockfd < 0) return nil;
+    NSMutableArray *ips = [NSMutableArray array];
+    
+    int BUFFERSIZE = 4096;
+    struct ifconf ifc;
+    char buffer[BUFFERSIZE], *ptr, lastname[IFNAMSIZ], *cptr;
+    struct ifreq *ifr, ifrcopy;
+    ifc.ifc_len = BUFFERSIZE;
+    ifc.ifc_buf = buffer;
+    if (ioctl(sockfd, SIOCGIFCONF, &ifc) >= 0){
+        for (ptr = buffer; ptr < buffer + ifc.ifc_len; ){
+            ifr = (struct ifreq *)ptr;
+            int len = sizeof(struct sockaddr);
+            if (ifr->ifr_addr.sa_len > len) {
+                len = ifr->ifr_addr.sa_len;
+            }
+            ptr += sizeof(ifr->ifr_name) + len;
+            if (ifr->ifr_addr.sa_family != AF_INET) continue;
+            if ((cptr = (char *)strchr(ifr->ifr_name, ':')) != NULL) *cptr = 0;
+            if (strncmp(lastname, ifr->ifr_name, IFNAMSIZ) == 0) continue;
+            memcpy(lastname, ifr->ifr_name, IFNAMSIZ);
+            ifrcopy = *ifr;
+            ioctl(sockfd, SIOCGIFFLAGS, &ifrcopy);
+            if ((ifrcopy.ifr_flags & IFF_UP) == 0) continue;
+            
+            NSString *ip = [NSString stringWithFormat:@"%s", inet_ntoa(((struct sockaddr_in *)&ifr->ifr_addr)->sin_addr)];
+            [ips addObject:ip];
+        }
+    }
+    close(sockfd);
+    return ips.lastObject;
+}
+
+- (NSString *)externalIPAddress {
+    //请求url
+    NSURL *url = [NSURL URLWithString:@"https://pv.sohu.com/cityjson?ie=utf-8"];
+    NSMutableString *mString = [NSMutableString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil];
+    //判断返回字符串是否为所需数据
+    if ([mString hasPrefix:@"var returnCitySN = "]) {
+        //对字符串进行处理，获取json数据
+        [mString deleteCharactersInRange:NSMakeRange(0, 19)];
+        NSString *jsonStr = [mString substringToIndex:mString.length - 1];
+        //对Json字符串进行Json解析
+        NSData *data = [jsonStr dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+        return dict[@"cip"];
+    }
+    return nil;
+}
+
+- (long)diskTotalSize {
+    NSDictionary *systemAttributes = [[NSFileManager defaultManager] attributesOfFileSystemForPath:NSHomeDirectory() error:nil];
+    NSNumber *diskTotalSize = [systemAttributes objectForKey:NSFileSystemSize];
+    return (long)(diskTotalSize.floatValue / 1024.f / 1024.f);
+}
+
+- (long)diskFreeSize {
+    NSDictionary *systemAttributes = [[NSFileManager defaultManager] attributesOfFileSystemForPath:NSHomeDirectory() error:nil];
+    NSNumber *diskFreeSize = [systemAttributes objectForKey:NSFileSystemFreeSize];
+    return (long)(diskFreeSize.floatValue / 1024.f / 1024.f);
+}
+
+
+
 
 @end
