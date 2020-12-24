@@ -17,6 +17,7 @@
 #include <sys/stat.h>
 #include <dlfcn.h>
 #import <UserNotifications/UserNotifications.h>
+#include <mach/mach_host.h>
 
 @interface DeviceManager()
 
@@ -70,6 +71,12 @@
 
 /// 设备磁盘剩余空间大小
 @property(nonatomic, assign, readwrite) long diskFreeSize;
+
+/// 设备运行内存大小
+@property(nonatomic, assign, readwrite) long memoryTotalSize;
+
+/// 设备运行内存剩余空间大小
+@property(nonatomic, assign, readwrite) long memoryFreeSize;
 
 /// 设备当前电量
 @property(nonatomic, assign, readwrite) CGFloat batteryLevel;
@@ -526,6 +533,22 @@
     return (long)(diskFreeSize.floatValue / 1024.f / 1024.f);
 }
 
+- (long)memoryTotalSize {
+    long long total = [NSProcessInfo processInfo].physicalMemory;
+    return (long)(total / 1024.f / 1024.f);
+}
+
+- (long)memoryFreeSize {
+    vm_statistics_data_t vmStats;
+    mach_msg_type_number_t infoCount = HOST_VM_INFO_COUNT;
+    kern_return_t kernReturn = host_statistics(mach_host_self(), HOST_VM_INFO, (host_info_t)&vmStats, &infoCount);
+    if (kernReturn != KERN_SUCCESS)
+    {
+        return NSNotFound;
+    }
+    long long free = ((vm_page_size * vmStats.free_count + vm_page_size * vmStats.inactive_count));
+    return (long)(free / 1024.f / 1024.f);
+}
 
 
 

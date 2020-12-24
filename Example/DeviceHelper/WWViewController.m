@@ -43,6 +43,8 @@
     NSLog(@"设备总存储空间:%ld", [DeviceManager sharedManager].diskTotalSize);
     NSLog(@"设备可用存储空间:%ld", [DeviceManager sharedManager].diskFreeSize);
     
+    NSLog(@"设备总内存空间:%ld", [DeviceManager sharedManager].memoryTotalSize);
+    NSLog(@"设备可用内存空间:%ld", [DeviceManager sharedManager].memoryFreeSize);
     NSLog(@"设备是否代理:%d", [DeviceManager sharedManager].isProxy);
     
 }

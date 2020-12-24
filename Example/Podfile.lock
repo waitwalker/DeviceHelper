@@ -1,5 +1,5 @@
 PODS:
-  - DeviceHelper (0.1.0)
+  - DeviceHelper (1.0)
 
 DEPENDENCIES:
   - DeviceHelper (from `../`)
@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  DeviceHelper: 1561100ac0dd5db63d31afea428250aaf288f45e
+  DeviceHelper: 9c9eb1a0be751c00fb29c258d62f8aa1ee3b9ad5
 
 PODFILE CHECKSUM: f7491e52d88df5eecb3d773f88266a040dc655f4
 

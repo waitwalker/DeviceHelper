@@ -81,6 +81,12 @@ typedef enum : NSInteger {
 /// 设备磁盘剩余空间大小
 @property(nonatomic, assign, readonly) long diskFreeSize;
 
+/// 设备运行内存大小
+@property(nonatomic, assign, readonly) long memoryTotalSize;
+
+/// 设备运行内存剩余空间大小
+@property(nonatomic, assign, readonly) long memoryFreeSize;
+
 /// 设备当前电量
 @property(nonatomic, assign, readonly) CGFloat batteryLevel;
 

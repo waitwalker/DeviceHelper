@@ -410,37 +410,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		16752E25499FE73C25B4D3B130ABFD17 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = E133EE692CA67A3AE7FBC205A9B1C5DB /* DeviceHelper.release.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/DeviceHelper/DeviceHelper-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/DeviceHelper/DeviceHelper-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/DeviceHelper/DeviceHelper.modulemap";
-				PRODUCT_MODULE_NAME = DeviceHelper;
-				PRODUCT_NAME = DeviceHelper;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
 		25AD9454612BF454A1E3DC4CD4FA8C6D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -506,6 +475,38 @@
 				SYMROOT = "${SRCROOT}/../build";
 			};
 			name = Debug;
+		};
+		389C9AC78991A38E97A9CAB6627BC95A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E133EE692CA67A3AE7FBC205A9B1C5DB /* DeviceHelper.release.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/DeviceHelper/DeviceHelper-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/DeviceHelper/DeviceHelper-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/DeviceHelper/DeviceHelper.modulemap";
+				PRODUCT_MODULE_NAME = DeviceHelper;
+				PRODUCT_NAME = DeviceHelper;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
 		};
 		449EF8D09E4A349A3F924765F7B76575 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -637,10 +638,11 @@
 			};
 			name = Release;
 		};
-		AA1698A41D60A415B8D7676257B9DC14 /* Debug */ = {
+		BD9441BDC6300BD5C9DB40F0E9EA0377 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E2B59DEF8EF90008FA4467EB549CBFB8 /* DeviceHelper.debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
@@ -652,7 +654,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/DeviceHelper/DeviceHelper-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/DeviceHelper/DeviceHelper-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/DeviceHelper/DeviceHelper.modulemap";
 				PRODUCT_MODULE_NAME = DeviceHelper;
@@ -735,8 +737,8 @@
 		133AF31A64645A20DF9384D61E1E68C2 /* Build configuration list for PBXNativeTarget "DeviceHelper" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				AA1698A41D60A415B8D7676257B9DC14 /* Debug */,
-				16752E25499FE73C25B4D3B130ABFD17 /* Release */,
+				BD9441BDC6300BD5C9DB40F0E9EA0377 /* Debug */,
+				389C9AC78991A38E97A9CAB6627BC95A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
